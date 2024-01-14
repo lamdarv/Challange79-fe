@@ -181,7 +181,7 @@ const Landing = () => {
 
   return (
     <>
-      {serverDown && <Overlay />} {/* Render the Overlay when the Snackbar is open */}
+      {/* {serverDown && <Overlay />}  */}
       <Box
         sx={{
           position: 'relative',

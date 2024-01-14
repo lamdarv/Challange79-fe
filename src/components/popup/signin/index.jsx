@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
-import { Dialog, DialogContent, TextField, Button, Typography, Link, InputAdornment, IconButton } from '@mui/material';
+import { Dialog, DialogContent, Typography, Link, InputAdornment, IconButton} from '@mui/material';
 import { Visibility, VisibilityOff, Close as CloseIcon } from '@mui/icons-material';
 import GoogleIcon from '@mui/icons-material/Google';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { CustomTextField1 } from 'components/text-field/text-field-1';
+import { CustomButton1 } from 'components/button/button-1';
+import { CustomButton2 } from 'components/button/button-2';
+
 
 const SignInPopup = ({ open, onClose }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -54,7 +58,7 @@ const SignInPopup = ({ open, onClose }) => {
             Please sign in first to explore further on our website
           </Typography>
           <form onSubmit={handleSubmitSignIn}>
-            <TextField
+            <CustomTextField1 
               autoFocus
               margin="dense"
               id="email"
@@ -64,36 +68,8 @@ const SignInPopup = ({ open, onClose }) => {
               fullWidth
               variant="outlined"
               onChange={handleChangeSignIn}
-              InputLabelProps={{
-                style: {
-                  color: '#848484',
-                  fontFamily: 'Inter',
-                  fontWeight: 400,
-                },
-              }}
-              InputProps={{
-                style: {
-                  color: '#212121',
-                  fontFamily: 'Inter',
-                  fontWeight: 400,
-                },
-              }}
-              sx={{
-                '& .MuiOutlinedInput-root': {
-                  '& fieldset': {
-                    borderColor: '#848484',
-                    borderRadius: '10px',
-                  },
-                  '&:hover fieldset': {
-                    borderColor: '#848484', // Change this for hover state
-                  },
-                  '&.Mui-focused fieldset': {
-                    borderColor: '#848484', // Change this for focus state
-                  },
-                },
-              }}
             />
-            <TextField
+            <CustomTextField1
               margin="dense"
               id="password"
               name="password"
@@ -102,15 +78,7 @@ const SignInPopup = ({ open, onClose }) => {
               fullWidth
               variant="outlined"
               onChange={handleChangeSignIn}
-              InputLabelProps={{
-                style: { color: '#848484' },
-              }}
               InputProps={{
-                style: {
-                  color: '#212121',
-                  fontFamily: 'Inter',
-                  fontWeight: 400,
-                },
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton
@@ -125,59 +93,25 @@ const SignInPopup = ({ open, onClose }) => {
                   </InputAdornment>
                 ),
               }}
-              sx={{
-                '& .MuiOutlinedInput-root': {
-                  '& fieldset': {
-                    borderColor: '#848484',
-                    borderRadius: '10px',
-                  },
-                  '&:hover fieldset': {
-                    borderColor: '#848484', // Change this for hover state
-                  },
-                  '&.Mui-focused fieldset': {
-                    borderColor: '#848484', // Change this for focus state
-                  },
-                },
-              }}
             />
-            <Button
+            <CustomButton1
               fullWidth
               variant="contained"
               type='Submit'
-              sx={{
-                mt: 2,
-                mb: 2,
-                backgroundColor: '#2C8AD3',
-                color: '#FDFDFD',
-                fontFamily: 'Inter',
-                fontWeight: 600,
-                boxShadow: 'none',
-                textTransform: 'none',
-              }}
             >
               Sign In
-            </Button>
+            </CustomButton1>
           </form>
 
           <hr style={{ borderColor: '#DBDBDB' }} />
 
-          <Button
+          <CustomButton2
             fullWidth
             variant="outlined"
             startIcon={<GoogleIcon style={{ color: '#848484', height: '15px' }} />}
-            sx={{
-              mt: 2,
-              mb: 2,
-              backgroundColor: 'white',
-              color: '#848484',
-              fontFamily: 'Inter',
-              fontWeight: 600,
-              boxShadow: 'none',
-              textTransform: 'none',
-            }}
           >
             Sign In with Google
-          </Button>
+          </CustomButton2>
           <Typography variant="body2" align="center" sx={{ mt: 2, color: '#212121', fontFamily: 'Inter', fontWeight: 400 }}>
             Don’t have an Account?{' '}
             <Link href="#" onClick={onClose} sx={{ color: '#2C8AD3', textDecoration: 'none' }}>

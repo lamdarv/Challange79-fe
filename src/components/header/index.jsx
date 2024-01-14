@@ -1,18 +1,28 @@
 import React, { useState } from 'react';
 import { Typography, Button, Box } from '@mui/material';
-import SignInPopup from 'components/popup';
+import SignInPopup from 'components/popup/signin';
+import RegisterPopup from 'components/popup/register';
 
 
 const Header = () => {
   const [IsSignInPopUpOpen, setIsSignInPopUpOpen] = useState(false);
+  const [IsRegisterPopUpOpen, setIsRegisterPopUpOpen] = useState(false);
   
 
   const handleSignInClick = () => {
-    setIsSignInPopUpOpen(true); // When the button is clicked, open the sign in popup
+    setIsSignInPopUpOpen(true); 
   };
 
   const handleCloseSignInPopup = () => {
-    setIsSignInPopUpOpen(false); // This function is passed to SignInPopup to close it
+    setIsSignInPopUpOpen(false); 
+  };
+
+  const handleRegisterClick = () => {
+    setIsRegisterPopUpOpen(true); 
+  };
+
+  const handleCloseRegisterPopup = () => {
+    setIsRegisterPopUpOpen(false); 
   };
 
   return (
@@ -25,7 +35,11 @@ const Header = () => {
           </Typography>
         </Box>
         <Box>
-          <Button variant="text" sx={{ fontFamily: 'Inter', fontWeight: 600, mr: 2, color: 'white' }}>
+          <Button 
+            variant="text" 
+            onClick={handleRegisterClick}
+            sx={{ fontFamily: 'Inter', fontWeight: 600, mr: 2, color: 'white' }}
+          >
             Register
           </Button>
           <Button
@@ -46,6 +60,7 @@ const Header = () => {
         
       </Box>
       <SignInPopup open={IsSignInPopUpOpen} onClose={handleCloseSignInPopup} />
+      <RegisterPopup open={IsRegisterPopUpOpen} onClose={handleCloseRegisterPopup} />
     </>
   );
 };
