@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Dialog, DialogContent, Typography, Link, InputAdornment, IconButton, MenuItem, Box } from '@mui/material';
 import { Visibility, VisibilityOff, Close as CloseIcon } from '@mui/icons-material';
-import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
-import Grid from '@mui/material/Grid';
+import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Grid, Alert, Snackbar } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -13,8 +12,6 @@ import { TickSquare } from 'iconsax-react';
 import { CloseSquare } from 'iconsax-react';
 import CustomDatePicker from '../../text-field/date-picker';
 import { format } from 'date-fns';
-import Alert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
 
 const PasswordValidation = ({ isValid, text }) => {
   const validationColor = isValid ? '#30A952' : '#848484';

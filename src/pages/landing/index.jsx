@@ -1,31 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Container, Typography, TextField, Button, Grid, Box, IconButton } from '@mui/material';
+import { Container, Typography, Button, Grid, Box, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import { styled } from '@mui/system';
 import InputAdornment from '@mui/material/InputAdornment';
 import Footer from 'components/footer';
-import Header from 'components/header';
+import Header from 'components/header/landing-header';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
-
-const CustomTextField = styled(TextField)({
-  '& .MuiOutlinedInput-root': {
-    borderRadius: '36px',
-    backgroundColor: 'white', // Background color
-    color: '#C4C4C4',
-  },
-  '& .MuiOutlinedInput-input': {
-    color: 'black',
-    marginLeft: '1rem',
-  },
-  '& .MuiInputLabel-outlined': {
-    color: 'black',
-  },
-  '& .MuiInputAdornment-positionEnd': {
-    marginRight: '1rem',
-  },
-});
+import { SearchBar } from 'components/search-bar/landing-search-bar';
+import { useNavigate } from 'react-router-dom';
 
 const Landing = () => {
   const [tags, setTags] = useState([]);
@@ -34,6 +17,8 @@ const Landing = () => {
   const [serverDown, setServerDown] = useState(false);
   const [updateFailed, setUpdateFailed] = useState(false);
   const [dataNotFound, setDataNotFound] = useState(false);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     const fetchTags = async () => {
@@ -44,8 +29,6 @@ const Landing = () => {
       } catch (error) {
         console.error('Could not fetch the tags: ', error);
         handleServerDown();
-        // handleFailedUpdateCounter();
-        // handleDataNotFound();
       }
     };
 
@@ -70,7 +53,7 @@ const Landing = () => {
       // Then, get talents associated with the tags
       const talentResponses = await Promise.all(
         tagsToSend.map((tagName) =>
-          axios.get(`http://localhost:8081/talent-management/talents?page=0&size=20&tagsName=${encodeURIComponent(tagName)}`)
+          axios.get(`http://localhost:8081/talent-management/talents?page=0&size=10&tagsName=${encodeURIComponent(tagName)}`)
         )
       );
 
@@ -79,10 +62,13 @@ const Landing = () => {
         if (!response.data.content.length || response.data.totalElements === 0) {
           handleDataNotFound();
         } else {
+          navigate('/main', { state: { searchTags: searchTags.split(',').map(tag => tag.trim()) } });
           console.log(`Data for ${tagsToSend[index]}: `, response.data);
           // You can update state with the response data if necessary
         }
       });
+
+      
 
       // If you want to collect all the data into one array and set it to state, you can do the following
       // const allTagsData = responses.map((response) => response.data);
@@ -237,7 +223,7 @@ const Landing = () => {
           >
             Welcome to <br /> Talent Center 79
           </Typography>
-          <CustomTextField
+          <SearchBar
             fullWidth
             placeholder="Try 'JavaScript'"
             variant="outlined"

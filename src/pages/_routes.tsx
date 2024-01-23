@@ -1,14 +1,17 @@
-import { Navigate, Outlet } from 'react-router-dom';
 // import { ThemeProvider } from '@mui/material';
-import { SecurableRoute } from '@astarx-studio/react-core/router';
 // import LoginLayout from 'layouts/LoginLayout';
 // import DashboardLayout from 'layouts/DashboardLayout';
 // import Customer from './customer';
+// import { LightTheme } from 'resource/themes'
+import { Navigate } from 'react-router-dom';
+import { SecurableRoute } from '@astarx-studio/react-core/router';
 import Landing from './landing';
-// import { LightTheme } from 'resource/themes';
 import ProtectedRoute from 'components/protected-route';
 import Client from 'dummy-pages/Client';
 import Admin from 'dummy-pages/Admin';
+import Main from './main';
+import TalentCardList from 'components/talent-card-list';
+import { TalentProvider } from './TalentContext';
 
 const routes: SecurableRoute[] = [
   {
@@ -18,6 +21,14 @@ const routes: SecurableRoute[] = [
   {
     path: 'landing',
     element: <Landing />,
+  }, 
+  {
+    path: 'main',
+    element: (
+      <TalentProvider>
+        <Main />
+      </TalentProvider>
+    ),
   }, 
   {
     path: 'client',
