@@ -16,7 +16,7 @@ const TalentCard = ({ talent }) => {
         display: 'flex',
         flexDirection: 'column',
         maxWidth: '100%',
-        height: isMobile ? '550px' : '310px',
+        height: isMobile ? '440px' : '310px',
         m: 1,
         p: 1, 
         backgroundColor: 'white',

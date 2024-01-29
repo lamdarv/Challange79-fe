@@ -2,8 +2,41 @@ import { Box } from '@mui/material';
 import Filter from 'components/talent-filter';
 import Header from 'components/header/main-header';
 import TalentCardList from 'components/talent-card-list';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import axios from 'axios';
+
+const executeSearch = async (searchTags) => {
+  const trimmedSearchTags = typeof searchTags === 'string' ? searchTags.trim() : '';
+  if (!trimmedSearchTags) return;
+
+  const tagsToSend = trimmedSearchTags.split(',').map(tag => tag.trim());
+
+  try {
+    // Bagian untuk update counter tags
+    await Promise.all(tagsToSend.map(tagName =>
+      axios.put(`http://localhost:8081/tags-management/tags?tagName=${encodeURIComponent(tagName)}`)
+    ));
+
+    // Membangun query string untuk multiple tags
+    const queryString = tagsToSend.map(tagName => `tagsName=${encodeURIComponent(tagName)}`).join('&');
+    const url = `http://localhost:8081/talent-management/talents?page=0&size=10&${queryString}`;
+
+    console.log("Request URL:", url); // Logging URL
+
+    const talentResponse = await axios.get(url);
+
+    if (!talentResponse.data.content.length || talentResponse.data.totalElements === 0) {
+      console.error('Data not found for tags:', tagsToSend.join(', '));
+    } else {
+      console.log('Data for tags:', tagsToSend.join(', '), ':', talentResponse.data);
+    }
+  } catch (error) {
+    console.error('Error in executeSearch:', error.response ? error.response.data : error.message);
+  }
+  
+};
+
 
 const Main = () => {
   const location = useLocation();
@@ -13,11 +46,8 @@ const Main = () => {
     if (location.state?.searchTags) {
       executeSearch(location.state.searchTags);
     }
-  }, [location]);
+  }, [location.state?.searchTags]);
 
-  const executeSearch = async () => {
-    // ... your search logic, which might now include navigation or displaying results
-  };
 
   return (
     <div>

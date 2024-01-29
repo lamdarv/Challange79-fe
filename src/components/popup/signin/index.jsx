@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dialog, DialogContent, Typography, Link, InputAdornment, IconButton} from '@mui/material';
+import { Dialog, DialogContent, Typography, Link, InputAdornment, IconButton } from '@mui/material';
 import { Visibility, VisibilityOff, Close as CloseIcon } from '@mui/icons-material';
 import GoogleIcon from '@mui/icons-material/Google';
 import axios from 'axios';
@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { CustomTextField1 } from 'components/text-field/text-field-1';
 import { CustomButton1 } from 'components/button/button-1';
 import { CustomButton2 } from 'components/button/button-2';
-
+// import Cookies from 'js-cookie';
 
 const SignInPopup = ({ open, onClose }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -38,7 +38,14 @@ const SignInPopup = ({ open, onClose }) => {
       localStorage.setItem('email', userData.email);
       localStorage.setItem('client_id', userData.client_id);
       localStorage.setItem('token', userData.token);
-      navigate('/client');
+
+      // Set cookies
+      // Cookies.set('user_id', userData.user_id);
+      // Cookies.set('role_id', userData.role_id);
+      // Cookies.set('email', userData.email);
+      // Cookies.set('client_id', userData.client_id);
+      // Cookies.set('token', userData.token);
+      navigate('/main');
     } catch (error) {
       console.error('Error during sign in:', error);
     }
@@ -58,7 +65,7 @@ const SignInPopup = ({ open, onClose }) => {
             Please sign in first to explore further on our website
           </Typography>
           <form onSubmit={handleSubmitSignIn}>
-            <CustomTextField1 
+            <CustomTextField1
               autoFocus
               margin="dense"
               id="email"
@@ -94,22 +101,14 @@ const SignInPopup = ({ open, onClose }) => {
                 ),
               }}
             />
-            <CustomButton1
-              fullWidth
-              variant="contained"
-              type='Submit'
-            >
+            <CustomButton1 fullWidth variant="contained" type="Submit">
               Sign In
             </CustomButton1>
           </form>
 
           <hr style={{ borderColor: '#DBDBDB' }} />
 
-          <CustomButton2
-            fullWidth
-            variant="outlined"
-            startIcon={<GoogleIcon style={{ color: '#848484', height: '15px' }} />}
-          >
+          <CustomButton2 fullWidth variant="outlined" startIcon={<GoogleIcon style={{ color: '#848484', height: '15px' }} />}>
             Sign In with Google
           </CustomButton2>
           <Typography variant="body2" align="center" sx={{ mt: 2, color: '#212121', fontFamily: 'Inter', fontWeight: 400 }}>

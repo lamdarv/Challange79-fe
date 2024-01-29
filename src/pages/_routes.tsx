@@ -10,8 +10,9 @@ import ProtectedRoute from 'components/protected-route';
 import Client from 'dummy-pages/Client';
 import Admin from 'dummy-pages/Admin';
 import Main from './main';
-import TalentCardList from 'components/talent-card-list';
+// import TalentCardList from 'components/talent-card-list';
 import { TalentProvider } from './TalentContext';
+import { ErrorBoundary } from './ErrorBoundary';
 
 const routes: SecurableRoute[] = [
   {
@@ -20,14 +21,20 @@ const routes: SecurableRoute[] = [
   },
   {
     path: 'landing',
-    element: <Landing />,
+    element: (
+      <ErrorBoundary>
+        <Landing />
+      </ErrorBoundary>
+    ),
   }, 
   {
     path: 'main',
     element: (
-      <TalentProvider>
-        <Main />
-      </TalentProvider>
+      <ProtectedRoute requiredRole="client">
+        <TalentProvider>
+          <Main />
+        </TalentProvider>
+      </ProtectedRoute>
     ),
   }, 
   {
@@ -47,34 +54,6 @@ const routes: SecurableRoute[] = [
     ),
   },
 
-  // {
-  //   path: 'admin',
-  //   element: (
-  //     <ThemeProvider theme={LightTheme}>
-  //       <Outlet />
-  //     </ThemeProvider>
-  //   ),
-  //   children: [
-  //     {
-  //       index: true,
-  //       element: <Navigate to="login" />,
-  //     },
-  //     {
-  //       path: 'login',
-  //       element: <LoginLayout />,
-  //     },
-  //     {
-  //       path: 'dashboard',
-  //       element: <DashboardLayout />,
-  //       children: [
-  //         {
-  //           index: true,
-  //           element: <>This... Is... DASHBOARD!!!</>,
-  //         },
-  //       ],
-  //     },
-  //   ],
-  // },
 ];
 
 export default routes;

@@ -4,6 +4,7 @@ import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import FilterSection from 'components/filter-section';
+import FilterSectionStatic from 'components/filter-section-static';
 
 const TalentFilter = () => {
   const [checked, setChecked] = useState([]);
@@ -13,6 +14,7 @@ const TalentFilter = () => {
   const [openFramework, setOpenFramework] = useState(true);
   const [openProgammingLanguage, setOpenProgrammingLanguage] = useState(true);
   const [openDevelopmentTools, setOpenDevelopmentTools] = useState(true);
+  const [openAvailability, setOpenAvailability] = useState(true);
   const [masterPosition, setMasterPosition] = useState([]);
   const [masterLevel, setMasterLevel] = useState([]);
   const [masterFramework, setMasterFramework] = useState([]);
@@ -55,6 +57,10 @@ const TalentFilter = () => {
   const handleClickDevelopmentTools = () => {
     setOpenDevelopmentTools(!openDevelopmentTools);
   };
+
+  const handleClickAvailability = () => {
+    setOpenAvailability(!openAvailability);
+  }
 
   useEffect(() => {
     const fetchMasterPosition = async () => {
@@ -133,6 +139,8 @@ const TalentFilter = () => {
     fetchMasterDevelopmentTools();
   }, []);
 
+  const availability = ['Available', 'Not Available'];
+
   return (
     <Box sx={{ backgroundColor: 'white', boxShadow: '0px 0px 20px 0px #0000001A', height: '100%', p: 6, mr: 1 }}>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -150,59 +158,15 @@ const TalentFilter = () => {
         handleToggle={handleToggle}
       />
 
-      {/* Filter Years of Experience */}
-      {/* <FilterSection
-        id="experience"
-        title="Experience"
+      {/* Filter Experience */}
+      <FilterSectionStatic 
         open={openExperince}
         handleClick={handleClickExperience}
-        items={yearsOfExperience}
         checked={checked}
         handleToggle={handleToggle}
-      /> */}
-      <Box id="experience-filter" sx={{ borderBottom: openExperince ? '1px solid #DBDBDB' : '0px', pb: openExperince ? 2 : 0 }}>
-        <List sx={{ width: '100%' }}>
-          <ListItem button onClick={handleClickExperience}>
-            <ListItemText
-              primary="Experience"
-              primaryTypographyProps={{
-                fontFamily: 'Poppins',
-                fontSize: '14px', // Ensure to include the unit 'px'
-                fontWeight: 700,
-                color: '#212121',
-              }}
-            />
-            {openExperince ? <ExpandLess /> : <ExpandMore />}
-          </ListItem>
-          <Collapse in={openExperince} timeout="auto" unmountOnExit>
-            {yearsOfExperience.map((experience) => {
-              const labelId = `checkbox-list-label-${experience}`;
-
-              return (
-                <ListItem key={experience} dense>
-                  <ListItemIcon>
-                    <Checkbox
-                      edge="start"
-                      checked={checked.indexOf(experience) !== -1}
-                      tabIndex={-1}
-                      disableRipple
-                      inputProps={{ 'aria-labelledby': labelId }}
-                      onClick={handleToggle(experience)}
-                      sx={{
-                        color: '#C4C4C4',
-                        '&.Mui-checked': {
-                          color: 'blue',
-                        },
-                      }}
-                    />
-                  </ListItemIcon>
-                  <ListItemText id={labelId} primary={experience} />
-                </ListItem>
-              );
-            })}
-          </Collapse>
-        </List>
-      </Box>
+        filterItems={yearsOfExperience}
+        filterTitle="Experience"
+      />
 
       {/* Filter Level */}
       <FilterSection
@@ -247,7 +211,20 @@ const TalentFilter = () => {
         checked={checked}
         handleToggle={handleToggle}
       />
+
+      {/* Filter Availability */}
+      <FilterSectionStatic 
+        open={openAvailability}
+        handleClick={handleClickAvailability}
+        checked={checked}
+        handleToggle={handleToggle}
+        filterItems={yearsOfExperience}
+        filterTitle="Talent Availability"
+      />
     </Box>
+
+      
+
   );
 };
 

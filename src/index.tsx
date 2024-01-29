@@ -24,7 +24,7 @@ root.render(
       themeProvider: ({ theme, children }) => <ThemeProvider theme={theme}>{children}</ThemeProvider>,
       defaultTheme: {
         light: LightTheme,
-        dark: DarkTheme,
+        // dark: DarkTheme,
       },
     }}
   />

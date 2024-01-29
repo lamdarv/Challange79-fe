@@ -1,9 +1,22 @@
-import { Container, Typography, Box, Grid } from '@mui/material';
+import { Container, Typography, Box, Grid, useTheme, useMediaQuery } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
+
+const FooterContainer = styled(Grid)(({ theme }) => ({
+  margin: 0,
+  padding: 0,
+  [theme.breakpoints.down('sm')]: {
+    marginTop: theme.spacing(5), // This assumes theme.spacing(5) returns a valid CSS value
+  },
+}));
+
+const FooterSection = styled(Box)(({ theme }) => ({
+  width: '100%',
+  paddingBottom: theme.spacing(1),
+}));
 
 const StyledBox = styled(Box)({
   color: 'white',
@@ -52,26 +65,36 @@ const SocialIcons = styled(Box)({
 });
 
 const Footer = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   return (
-    <Grid sx={{ display: 'flex' }}>
-      <Box id="footer-1" sx={{ position: 'absolute', bottom: '80px', left: 0, right: 0, p: 2, backgroundColor: '#142B51' }}>
-        <Container maxWidth="lg" sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <StyledBox>
-            <Heading variant="h6" gutterBottom>
+    <FooterContainer container>
+      <FooterSection sx={{ backgroundColor: '#142B51', width: '100%' }}>
+        {/* ... (content of footer-1) */}
+        <Container
+          maxWidth="lg"
+          sx={{ 
+            display: 'flex', 
+            justifyContent: isMobile ? 'center' : 'space-between', 
+            flexDirection: isMobile ? 'column' : 'row',
+            alignItems: 'center',   
+        }}>
+          <StyledBox sx={{ marginBottom: isMobile ? 2 : 0 }}>
+            <Heading variant="h6" gutterBottom sx={{ display: 'flex', justifyContent: isMobile ? 'center' : 'none' }}>
               Useful Links
             </Heading>
             {['Home', 'Our Technologies', 'Why Choose Us', 'Testimonials', 'Contact'].map((link) => (
-              <LinkText key={link} variant="subtitle1">
+              <LinkText key={link} variant="subtitle1" sx={{ display: 'flex', justifyContent: isMobile ? 'center' : 'none' }}>
                 {link}
               </LinkText>
             ))}
           </StyledBox>
 
-          <StyledBox>
-            <Heading variant="h6" gutterBottom>
+          <StyledBox sx={{ textAlign: isMobile ? 'center' : 'left' }}>
+            <Heading variant="h6" gutterBottom sx={{ display: 'flex', justifyContent: isMobile ? 'center' : 'none' }}>
               Contact Us
             </Heading>
-            <Grid sx={{ mb: '0.5rem' }}>
+            <Grid sx={{ mb: '0.5rem', display: 'flex', justifyContent: isMobile ? 'center' : 'none' }}>
               <Box component="span" fontWeight={700} fontFamily={'Inter'}>
                 Address:
               </Box>
@@ -79,7 +102,7 @@ const Footer = () => {
                 Kompleks Terasana No.6A <br /> Jalan Cihampelas (Bawah) <br /> Bandung 40171
               </Box>
             </Grid>
-            <Grid sx={{ mb: '0.5rem' }}>
+            <Grid sx={{ mb: '0.5rem', display: 'flex', justifyContent: isMobile ? 'center' : 'none' }}>
               <Box component="span" sx={{ fontWeight: 700, fontFamily: 'Inter' }}>
                 Phone:
               </Box>
@@ -87,13 +110,13 @@ const Footer = () => {
                 (022) 20505455
               </Box>
             </Grid>
-            <Grid sx={{ mb: '0.5rem' }}>
+            <Grid sx={{ mb: '0.5rem', display: 'flex', justifyContent: isMobile ? 'center' : 'none' }}>
               <Box component="span" sx={{ fontWeight: 700, fontFamily: 'Inter' }}>
                 Follow Us On
               </Box>
             </Grid>
 
-            <SocialIcons>
+            <SocialIcons sx={{ display: 'flex', justifyContent: isMobile ? 'center' : 'none' }}>
               <IconButton aria-label="facebook">
                 <FacebookIcon style={{ color: 'white' }} />
               </IconButton>
@@ -105,27 +128,14 @@ const Footer = () => {
               </IconButton>
             </SocialIcons>
 
-            <Grid sx={{ mt: '0.5rem' }}>
+            <Grid sx={{ mt: '0.5rem', display: 'flex', justifyContent: isMobile ? 'center' : 'none' }}>
               <img src="/resource/image/logotujuhsembilan-2.png" alt="logo 79" />
             </Grid>
           </StyledBox>
         </Container>
-      </Box>
-      <Box
-        id="footer-2"
-        sx={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          p: 2,
-          backgroundColor: '#081E43',
-          display: 'flex', // Use flexbox to center items
-          justifyContent: 'center', // Center items horizontally
-          alignItems: 'center', // Center items vertically
-        }}
-      >
-        <Grid container sx={{ mb: '0.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+      </FooterSection>
+      <FooterSection sx={{ backgroundColor: '#081E43' }}>
+        <Grid container sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', mt: 2, mb: 2 }}>
           <Grid item>
             <Box component="span" sx={{ fontWeight: 700, fontFamily: 'Inter', textAlign: 'center', width: '100%' }}>
               © Copyright 2020
@@ -142,8 +152,8 @@ const Footer = () => {
             </Box>
           </Grid>
         </Grid>
-      </Box>
-    </Grid>
+      </FooterSection>
+    </FooterContainer>
   );
 };
 

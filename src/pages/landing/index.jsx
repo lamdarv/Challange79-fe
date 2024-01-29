@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Container, Typography, Button, Grid, Box, IconButton } from '@mui/material';
+import { Container, Typography, Button, Grid, Box, IconButton, useTheme, useMediaQuery } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import InputAdornment from '@mui/material/InputAdornment';
 import Footer from 'components/footer';
@@ -18,6 +18,8 @@ const Landing = () => {
   const [updateFailed, setUpdateFailed] = useState(false);
   const [dataNotFound, setDataNotFound] = useState(false);
   const navigate = useNavigate();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
 
   useEffect(() => {
@@ -67,8 +69,6 @@ const Landing = () => {
           // You can update state with the response data if necessary
         }
       });
-
-      
 
       // If you want to collect all the data into one array and set it to state, you can do the following
       // const allTagsData = responses.map((response) => response.data);
@@ -171,12 +171,14 @@ const Landing = () => {
       <Box
         sx={{
           position: 'relative',
-          height: '120vh',
+          display: 'flex',
+          flexDirection: 'column', // Stack children vertically
+          justifyContent: 'space-between',
+          minHeight: '100vh',
           backgroundImage: 'url(/resource/image/bg-landing.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           color: 'white',
-          p: 4,
         }}
       >
         {/* Header Section */}
@@ -212,13 +214,14 @@ const Landing = () => {
         </Snackbar>
 
         {/* Main Content */}
-        <Container maxWidth="lg" sx={{ textAlign: 'center', pt: 8 }}>
+        <Container maxWidth="lg" sx={{ textAlign: 'center', mb: isMobile? 3 : 15 }}>
           <Typography
             variant="h3"
             gutterBottom
             sx={{
               fontFamily: 'Poppins',
               fontWeight: 700,
+              fontSize: isMobile? 26 : 30
             }}
           >
             Welcome to <br /> Talent Center 79
@@ -262,6 +265,7 @@ const Landing = () => {
                   sx={{
                     fontFamily: 'Inter',
                     fontWeight: 600,
+                    fontSize: isMobile? 12 : 16,
                     backgroundColor: 'white',
                     color: 'black',
                     '&:hover': { backgroundColor: '#C4C4C4' },
